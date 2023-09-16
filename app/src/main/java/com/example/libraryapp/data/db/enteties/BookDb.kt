@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 )
 data class BookDb(
     @PrimaryKey(autoGenerate = true)
-    val bookId: Long,
+    val bookId: Long = 1,
     val title: String,
     val authors: String,
     val publishedDate: String,

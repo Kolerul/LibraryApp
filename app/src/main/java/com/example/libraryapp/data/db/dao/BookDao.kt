@@ -19,6 +19,9 @@ interface BookDao {
     @Update
     fun updateBook(book: BookDb)
 
+    @Query("SELECT * FROM books WHERE title = :title AND bookshelf = :bookshelf")
+    fun getBookFromBookshelfByTitle(title: String, bookshelf: String): BookDb
+
     @Query("SELECT * FROM books ORDER BY title")
     fun getAllBooks(): List<BookDb>
 
