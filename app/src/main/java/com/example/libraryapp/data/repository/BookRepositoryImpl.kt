@@ -11,7 +11,9 @@ import com.example.libraryapp.domain.repository.BookRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class BookRepositoryImpl @Inject constructor(
     private val bookApi: BookApi,
     private val bookDao: BookDao,

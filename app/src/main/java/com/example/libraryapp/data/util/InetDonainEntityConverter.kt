@@ -5,13 +5,14 @@ import com.example.libraryapp.domain.entity.Book
 
 fun convertInetBookToBook( inetBook: InetBook): Book =
     Book(
-        title = inetBook.volumeInfo.title,
+        title = inetBook.volumeInfo.title ?: "None",
         authors = inetBook.volumeInfo.authors ?: listOf("Unknown"),
         publishedDate = inetBook.volumeInfo.publishedDate ?: "Unknown",
         description = inetBook.volumeInfo.description ?: "None",
-        publisher = inetBook.volumeInfo.publisher,
-        imageUrl = inetBook.volumeInfo.imageLinks.thumbnail,
-        categories = inetBook.volumeInfo.categories ?: emptyList()
+        publisher = inetBook.volumeInfo.publisher ?: "None",
+        imageUrl = inetBook.volumeInfo.imageLinks?.thumbnail ?: "",
+        categories = inetBook.volumeInfo.categories ?: emptyList(),
+        id = inetBook.id
     )
 
 fun convertListInetBookToBook(list: List<InetBook>): List<Book> =

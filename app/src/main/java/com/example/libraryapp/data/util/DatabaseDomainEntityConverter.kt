@@ -19,7 +19,8 @@ fun convertBookToBookDb(book: Book, bookshelf: String): BookDb{
         publisher = book.publisher,
         imageUrl = book.imageUrl,
         categories = categories,
-        bookshelf = bookshelf
+        bookshelf = bookshelf,
+        googleId = book.id
     )
 }
 
@@ -39,7 +40,8 @@ fun convertBookDbToBook(book: BookDb): Book{
         publisher = book.publisher,
         imageUrl = book.imageUrl,
         description = book.description,
-        categories = categories
+        categories = categories,
+        id = book.googleId
     )
 }
 

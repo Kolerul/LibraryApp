@@ -11,6 +11,7 @@ data class BookDb(
     val bookId: Long = 1,
     val title: String,
     val authors: String,
+    val googleId: String,
     val publishedDate: String,
     val description: String,
     val publisher: String,
