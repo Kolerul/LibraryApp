@@ -82,4 +82,6 @@ dependencies {
 
     val fragmentVersion = "1.6.1"
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
+
+    implementation("io.coil-kt:coil:2.2.2")
 }

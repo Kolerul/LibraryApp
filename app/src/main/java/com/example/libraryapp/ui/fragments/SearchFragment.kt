@@ -76,7 +76,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun setAdapter(list: List<Book>) {
-        val adapter = BookAdapter()
+        val adapter = BookAdapter(
+            viewModel::addBookToBookshelf
+        )
         binding.bookRecyclerView.adapter = adapter
         adapter.submitList(list)
     }
