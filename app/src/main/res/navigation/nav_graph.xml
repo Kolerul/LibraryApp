@@ -7,10 +7,15 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.libraryapp.ui.fragments.SearchFragment"
-        android:label="SearchFragment">
-        <action
-            android:id="@+id/action_searchFragment_to_placeholder"
-            app:destination="@id/placeholder" />
-    </fragment>
-    <fragment android:id="@+id/placeholder" />
+        android:label="SearchFragment" />
+    <fragment
+        android:id="@+id/bookshelfFragment"
+        android:name="com.example.libraryapp.ui.fragments.BookshelfFragment"
+        android:label="BookshelfFragment" />
+    <action
+        android:id="@+id/action_global_searchFragment"
+        app:destination="@id/searchFragment" />
+    <action
+        android:id="@+id/action_global_bookshelfFragment"
+        app:destination="@id/bookshelfFragment" />
 </navigation>

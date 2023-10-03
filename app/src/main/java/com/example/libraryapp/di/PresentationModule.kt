@@ -1,6 +1,7 @@
 package com.example.libraryapp.di
 
 import androidx.lifecycle.ViewModel
+import com.example.libraryapp.presentation.viewmodel.DetailsViewModel
 import com.example.libraryapp.presentation.viewmodel.SearchViewModel
 import dagger.Binds
 import dagger.Module
@@ -13,4 +14,9 @@ interface PresentationModule {
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
     fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailsViewModel::class)
+    fun bindDetailsViewModel(viewModel: DetailsViewModel): ViewModel
 }
