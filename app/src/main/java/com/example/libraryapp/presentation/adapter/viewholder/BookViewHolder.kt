@@ -14,14 +14,30 @@ class BookViewHolder(
     fun bind(book: Book) {
         binding.apply {
             title.text = book.title
-            author.text = book.authors.joinToString(
-                separator = ", "
+            author.text = root.context.getString(
+                R.string.authors_info,
+                book.authors.joinToString(
+                    separator = ", "
+                )
             )
-            publishedDate.text = book.publishedDate
-            publisher.text = book.publisher
-            categories.text = book.categories.joinToString(
-                separator = ", "
+
+            publishedDate.text = root.context.getString(
+                R.string.publish_date_info,
+                book.publishedDate
             )
+
+            publisher.text = root.context.getString(
+                R.string.publisher_info,
+                book.publisher
+            )
+
+            categories.text = root.context.getString(
+                R.string.publisher_info,
+                book.categories.joinToString(
+                    separator = ", "
+                )
+            )
+
             previewImage.load({ book.imageUrl }) {
                 placeholder(R.drawable.loading_animation)
                 error(R.drawable.ic_image_not_found)

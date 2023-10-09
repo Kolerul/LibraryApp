@@ -2,4 +2,8 @@
     <string name="app_name">LibraryApp</string>
     <string name="title">Title</string>
     <string name="author">Author</string>
+    <string name="authors_info">Authors: %s</string>
+    <string name="publish_date_info">Publish date: %s</string>
+    <string name="publisher_info">Publisher: %s</string>
+    <string name="categories_info">Categories: %s</string>
 </resources>

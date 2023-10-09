@@ -31,7 +31,7 @@ fun convertListBookToBookDb(list: List<Book>, bookshelf: String): List<BookDb> =
 
 fun convertBookDbToBook(book: BookDb): Book{
     val authors = book.authors.split(", ").toList()
-    val categories = book.authors.split(", ").toList()
+    val categories = book.categories.split(", ").toList()
 
     return Book(
         title = book.title,
