@@ -7,9 +7,9 @@ interface BookRepository {
 
     suspend fun getAllBooksFromBookshelf(bookshelf: String): List<Book>
 
-    suspend fun getBookByTitleFromBookshelf(title: String, bookshelf: String): Book
+    suspend fun getBookById(id: String, bookshelf: String): Book
 
     suspend fun addBookToBookshelf(book: Book, bookshelf: String)
 
-    suspend fun deleteBookFromBookshelf(book: Book, bookshelf: String)
+    suspend fun deleteBookFromBookshelf(id: String)
 }

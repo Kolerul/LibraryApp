@@ -24,9 +24,9 @@ class BookRepositoryImpl @Inject constructor(
         val part1 = title.ifBlank {
             ""
         }
-        val part2 = if (author.isNotBlank()){
+        val part2 = if (author.isNotBlank()) {
             "inauthor:$author"
-        }else{
+        } else {
             ""
         }
         val request = part1 + part2
@@ -34,23 +34,25 @@ class BookRepositoryImpl @Inject constructor(
         return@withContext convertListInetBookToBook(response.items)
     }
 
-    override suspend fun getAllBooksFromBookshelf(bookshelf: String): List<Book> = withContext(dispatcher){
-        val booksDb = bookDao.getAllBooksFromBookshelf(bookshelf)
-        return@withContext convertListBookDbToBook(booksDb)
-    }
+    override suspend fun getAllBooksFromBookshelf(bookshelf: String): List<Book> =
+        withContext(dispatcher) {
+            val booksDb = bookDao.getAllBooksFromBookshelf(bookshelf)
+            return@withContext convertListBookDbToBook(booksDb)
+        }
 
-    override suspend fun getBookByTitleFromBookshelf(title: String, bookshelf: String): Book = withContext(dispatcher){
-        val bookDb = bookDao.getBookFromBookshelfByTitle(title, bookshelf)
-        return@withContext convertBookDbToBook(bookDb)
-    }
+    override suspend fun getBookById(id: String, bookshelf: String): Book =
+        withContext(dispatcher) {
+            val bookDb = bookDao.getBookFromBookshelfById(id, bookshelf)
+            return@withContext convertBookDbToBook(bookDb)
+        }
 
-    override suspend fun addBookToBookshelf(book: Book, bookshelf: String): Unit = withContext(dispatcher) {
-        val bookDb = convertBookToBookDb(book, bookshelf)
-        bookDao.addBook(bookDb)
-    }
+    override suspend fun addBookToBookshelf(book: Book, bookshelf: String): Unit =
+        withContext(dispatcher) {
+            val bookDb = convertBookToBookDb(book, bookshelf)
+            bookDao.addBook(bookDb)
+        }
 
-    override suspend fun deleteBookFromBookshelf(book: Book, bookshelf: String): Unit = withContext(dispatcher) {
-        val bookDb = convertBookToBookDb(book, bookshelf)
-        bookDao.deleteBook(bookDb)
+    override suspend fun deleteBookFromBookshelf(id: String): Unit = withContext(dispatcher) {
+        bookDao.deleteBook(id)
     }
 }

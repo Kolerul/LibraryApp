@@ -6,4 +6,6 @@
     <string name="publish_date_info">Publish date: %s</string>
     <string name="publisher_info">Publisher: %s</string>
     <string name="categories_info">Categories: %s</string>
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
 </resources>

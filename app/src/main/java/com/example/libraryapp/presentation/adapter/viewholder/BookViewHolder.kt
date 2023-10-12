@@ -38,7 +38,7 @@ class BookViewHolder(
                 )
             )
 
-            previewImage.load({ book.imageUrl }) {
+            previewImage.load({ "https://ru.m.wikipedia.org/wiki/Файл:${book.title}.jpg" }) {
                 placeholder(R.drawable.loading_animation)
                 error(R.drawable.ic_image_not_found)
             }

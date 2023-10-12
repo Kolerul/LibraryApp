@@ -19,7 +19,6 @@ interface PresentationModule {
     fun bindSearchViewModel(viewModel: SearchViewModel): ViewModel
 
     @Binds
-    @Singleton
     @IntoMap
     @ViewModelKey(DetailsViewModel::class)
     fun bindDetailsViewModel(viewModel: DetailsViewModel): ViewModel

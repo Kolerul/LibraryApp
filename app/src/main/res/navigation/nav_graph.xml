@@ -11,11 +11,24 @@
     <fragment
         android:id="@+id/bookshelfFragment"
         android:name="com.example.libraryapp.ui.fragments.BookshelfFragment"
-        android:label="BookshelfFragment" />
+        android:label="BookshelfFragment">
+        <action
+            android:id="@+id/action_bookshelfFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <action
         android:id="@+id/action_global_searchFragment"
         app:destination="@id/searchFragment" />
     <action
         android:id="@+id/action_global_bookshelfFragment"
         app:destination="@id/bookshelfFragment" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.libraryapp.ui.fragments.DetailsFragment"
+        android:label="DetailsFragment">
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -89,6 +89,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
 
     implementation("io.coil-kt:coil:2.2.2")
+    implementation("io.coil-kt:coil-compose:2.0.0-rc01")
 
     val composeVersion = "1.7.2"
     implementation("androidx.activity:activity-compose:$composeVersion")

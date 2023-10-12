@@ -1,7 +1,6 @@
 package com.example.libraryapp.data.db.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -13,14 +12,14 @@ interface BookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addBook(book: BookDb)
 
-    @Delete
-    fun deleteBook(book: BookDb)
+    @Query("DELETE FROM books WHERE googleId = :id")
+    fun deleteBook(id: String)
 
     @Update
     fun updateBook(book: BookDb)
 
-    @Query("SELECT * FROM books WHERE title = :title AND bookshelf = :bookshelf")
-    fun getBookFromBookshelfByTitle(title: String, bookshelf: String): BookDb
+    @Query("SELECT * FROM books WHERE googleId = :id AND bookshelf = :bookshelf")
+    fun getBookFromBookshelfById(id: String, bookshelf: String): BookDb
 
     @Query("SELECT * FROM books ORDER BY title")
     fun getAllBooks(): List<BookDb>
