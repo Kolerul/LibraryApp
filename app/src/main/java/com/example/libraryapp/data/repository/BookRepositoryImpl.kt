@@ -52,7 +52,8 @@ class BookRepositoryImpl @Inject constructor(
             bookDao.addBook(bookDb)
         }
 
-    override suspend fun deleteBookFromBookshelf(id: String): Unit = withContext(dispatcher) {
-        bookDao.deleteBook(id)
-    }
+    override suspend fun deleteBookFromBookshelf(id: String, bookshelf: String): Unit =
+        withContext(dispatcher) {
+            bookDao.deleteBook(id, bookshelf)
+        }
 }

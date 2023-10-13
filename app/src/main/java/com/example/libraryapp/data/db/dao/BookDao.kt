@@ -12,8 +12,8 @@ interface BookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addBook(book: BookDb)
 
-    @Query("DELETE FROM books WHERE googleId = :id")
-    fun deleteBook(id: String)
+    @Query("DELETE FROM books WHERE googleId = :id AND bookshelf = :bookshelf")
+    fun deleteBook(id: String, bookshelf: String)
 
     @Update
     fun updateBook(book: BookDb)

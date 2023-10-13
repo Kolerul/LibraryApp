@@ -19,10 +19,13 @@
     </fragment>
     <action
         android:id="@+id/action_global_searchFragment"
-        app:destination="@id/searchFragment" />
+        app:destination="@id/searchFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
     <action
         android:id="@+id/action_global_bookshelfFragment"
-        app:destination="@id/bookshelfFragment" />
+        app:destination="@id/bookshelfFragment"
+        app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.libraryapp.ui.fragments.DetailsFragment"

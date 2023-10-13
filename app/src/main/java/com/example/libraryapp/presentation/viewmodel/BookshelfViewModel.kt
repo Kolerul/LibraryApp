@@ -1,5 +1,6 @@
 package com.example.libraryapp.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,7 @@ class BookshelfViewModel @Inject constructor(
             try {
                 _uiState.value =
                     BookshelfUIState.Success(repository.getAllBooksFromBookshelf(bookshelf))
+                Log.d("BookshelfFragment", _uiState.value.toString())
             } catch (e: Exception) {
                 _uiState.value = BookshelfUIState.Error(e::class.toString(), e.message.toString())
             }
