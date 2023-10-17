@@ -11,5 +11,5 @@ interface BookRepository {
 
     suspend fun addBookToBookshelf(book: Book, bookshelf: String)
 
-    suspend fun deleteBookFromBookshelf(id: String)
+    suspend fun deleteBookFromBookshelf(id: String, bookshelf: String)
 }

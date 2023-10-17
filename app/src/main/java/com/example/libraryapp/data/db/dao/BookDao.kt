@@ -12,14 +12,14 @@ interface BookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addBook(book: BookDb)
 
-    @Query("DELETE FROM books WHERE googleId = :id")
-    fun deleteBook(id: String)
+    @Query("DELETE FROM books WHERE bookId = :id AND bookshelf = :bookshelf")
+    fun deleteBookFromBookshelfById(id: String, bookshelf: String)
 
     @Update
     fun updateBook(book: BookDb)
 
-    @Query("SELECT * FROM books WHERE googleId = :id AND bookshelf = :bookshelf")
-    fun getBookFromBookshelfById(id: String, bookshelf: String): BookDb
+    @Query("SELECT * FROM books WHERE bookId = :id")
+    fun getBook(id: String): BookDb
 
     @Query("SELECT * FROM books ORDER BY title")
     fun getAllBooks(): List<BookDb>

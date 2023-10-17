@@ -3,6 +3,7 @@ package com.example.libraryapp.di
 import android.content.Context
 import androidx.room.Room
 import com.example.libraryapp.data.db.dao.BookDao
+import com.example.libraryapp.data.db.dao.BookshelfDao
 import com.example.libraryapp.data.db.database.BookDatabase
 import dagger.Module
 import dagger.Provides
@@ -23,4 +24,8 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideBookDao(db: BookDatabase): BookDao = db.getBookDao()
+
+    @Singleton
+    @Provides
+    fun provideBookshelfDao(db: BookDatabase): BookshelfDao = db.getBookshelfDao()
 }

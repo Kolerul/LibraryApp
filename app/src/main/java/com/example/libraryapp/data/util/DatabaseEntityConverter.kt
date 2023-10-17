@@ -1,7 +1,9 @@
 package com.example.libraryapp.data.util
 
 import com.example.libraryapp.data.db.enteties.BookDb
+import com.example.libraryapp.data.db.enteties.BookshelfDb
 import com.example.libraryapp.domain.entity.Book
+import com.example.libraryapp.domain.entity.Bookshelf
 
 fun convertBookToBookDb(book: Book, bookshelf: String): BookDb{
     val authors = book.authors.joinToString(
@@ -20,7 +22,7 @@ fun convertBookToBookDb(book: Book, bookshelf: String): BookDb{
         imageUrl = book.imageUrl,
         categories = categories,
         bookshelf = bookshelf,
-        googleId = book.id
+        bookId = book.id
     )
 }
 
@@ -41,11 +43,26 @@ fun convertBookDbToBook(book: BookDb): Book{
         imageUrl = book.imageUrl,
         description = book.description,
         categories = categories,
-        id = book.googleId
+        id = book.bookId
     )
 }
 
 fun convertListBookDbToBook(list: List<BookDb>): List<Book> =
     list.map { book ->
         convertBookDbToBook(book)
+    }
+
+fun convertToBookshelfDb(bookshelf: Bookshelf) =
+    BookshelfDb(
+        bookshelfTitle = bookshelf.bookshelfTitle
+    )
+
+fun convertToBookshelf(bookshelf: BookshelfDb) =
+    Bookshelf(
+        bookshelfTitle = bookshelf.bookshelfTitle
+    )
+
+fun convertListToBookshelf(list: List<BookshelfDb>): List<Bookshelf> =
+    list.map { bookshelf ->
+        convertToBookshelf(bookshelf)
     }

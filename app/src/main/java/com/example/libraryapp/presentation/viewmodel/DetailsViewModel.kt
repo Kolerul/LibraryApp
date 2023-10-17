@@ -29,10 +29,10 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    fun deleteBook(id: String) {
+    fun deleteBook(id: String, bookshelf: String) {
         viewModelScope.launch {
             try {
-                repository.deleteBookFromBookshelf(id)
+                repository.deleteBookFromBookshelf(id, bookshelf)
             } catch (e: Exception) {
                 _uiState.value = DetailsUIState.Error(e::class.toString(), e.message.toString())
             }

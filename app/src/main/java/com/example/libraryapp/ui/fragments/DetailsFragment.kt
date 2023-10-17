@@ -28,7 +28,10 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>(FragmentDetailsBind
         binding.apply {
             deleteIcon.setOnClickListener {
                 if (viewModel.uiState.value is DetailsUIState.Success) {
-                    viewModel.deleteBook((viewModel.uiState.value as DetailsUIState.Success).book.id)
+                    viewModel.deleteBook(
+                        (viewModel.uiState.value as DetailsUIState.Success).book.id,
+                        "Favourite"
+                    )
                 }
             }
         }
