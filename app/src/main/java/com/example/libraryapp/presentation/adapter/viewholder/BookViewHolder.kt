@@ -32,7 +32,7 @@ class BookViewHolder(
             )
 
             categories.text = root.context.getString(
-                R.string.publisher_info,
+                R.string.categories_info,
                 book.categories.joinToString(
                     separator = ", "
                 )
@@ -40,7 +40,7 @@ class BookViewHolder(
 
             previewImage.load({ "https://ru.m.wikipedia.org/wiki/Файл:${book.title}.jpg" }) {
                 placeholder(R.drawable.loading_animation)
-                error(R.drawable.ic_image_not_found)
+                error(randomizeImage())
             }
 
             starIcon.setOnClickListener { _ ->
@@ -48,5 +48,15 @@ class BookViewHolder(
                 starIcon.setImageResource(R.drawable.ic_full_star)
             }
         }
+    }
+
+    private fun randomizeImage(): Int {
+        val random = Math.random() * 6
+        if (random < 1) return R.drawable.red_book
+        if (random < 2) return R.drawable.blue_book
+        if (random < 3) return R.drawable.green_book
+        if (random < 4) return R.drawable.yellow_book
+        if (random < 5) return R.drawable.orange_book
+        return R.drawable.violet_book
     }
 }
