@@ -1,4 +1,4 @@
-package com.example.libraryapp.ui.compose
+package com.example.libraryapp.ui.compose.settings
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme

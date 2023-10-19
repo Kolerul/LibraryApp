@@ -1,6 +1,5 @@
 package com.example.libraryapp.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +27,7 @@ class BookshelfViewModel @Inject constructor(
     val bookshelfUIState: LiveData<BookshelfListUiState>
         get() = _bookshelfUIState
 
-    fun getBooksFromBookshelf(bookshelf: String) {
+    fun getBooksFromBookshelf(bookshelf: Bookshelf) {
         _booksUIState.value = BookshelfUIState.Loading
         viewModelScope.launch {
             try {
@@ -55,7 +54,6 @@ class BookshelfViewModel @Inject constructor(
     }
 
     fun createBookshelf(title: String) {
-        Log.d("BookshelfViewModel", "Create bookshelf")
         viewModelScope.launch {
             try {
                 bookshelfRepository.createBookshelf(title)

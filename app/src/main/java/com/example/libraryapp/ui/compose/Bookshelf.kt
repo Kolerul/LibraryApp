@@ -1,6 +1,6 @@
 package com.example.libraryapp.ui.compose
 
-import android.annotation.SuppressLint
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,107 +9,35 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.libraryapp.R
 import com.example.libraryapp.domain.entity.Book
-
-@Composable
-fun CircularProgressBar(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .width(100.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        CircularProgressIndicator(
-            modifier = modifier.width(100.dp),
-            strokeWidth = 10.dp
-        )
-    }
-}
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BookshelfTopAppBar(
-    onAddItemClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
-) {
-    val scrollBehavior =
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-
-    Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = "Favourite",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Filled.Menu,
-                            contentDescription = "Bookshelf menu"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = onAddItemClick) {
-                        Icon(
-                            imageVector = Icons.Filled.Add,
-                            contentDescription = "Add bookshelf"
-                        )
-                    }
-                },
-                scrollBehavior = scrollBehavior
-            )
-        }
-    ) { innerPadding ->
-        content()
-    }
-}
+import com.example.libraryapp.ui.compose.settings.TestTheme
 
 @Composable
 fun Bookshelf(
     books: List<Book> = emptyList(),
-    onItemClick: (String) -> Unit = {},
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onItemClick: (String) -> Unit = {}
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -287,5 +215,5 @@ fun PreviewShowBookshelf() {
 )
 @Composable
 fun PreviewShowProgressBar() {
-    CircularProgressBar()
+    CenterCircularProgressBar()
 }

@@ -7,6 +7,7 @@ import com.example.libraryapp.data.util.convertBookToBookDb
 import com.example.libraryapp.data.util.convertListBookDbToBook
 import com.example.libraryapp.data.util.convertListInetBookToBook
 import com.example.libraryapp.domain.entity.Book
+import com.example.libraryapp.domain.entity.Bookshelf
 import com.example.libraryapp.domain.repository.BookRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -34,26 +35,26 @@ class BookRepositoryImpl @Inject constructor(
         return@withContext convertListInetBookToBook(response.items)
     }
 
-    override suspend fun getAllBooksFromBookshelf(bookshelf: String): List<Book> =
+    override suspend fun getAllBooksFromBookshelf(bookshelf: Bookshelf): List<Book> =
         withContext(dispatcher) {
-            val booksDb = bookDao.getAllBooksFromBookshelf(bookshelf)
+            val booksDb = bookDao.getAllBooksFromBookshelf(bookshelf.bookshelfTitle)
             return@withContext convertListBookDbToBook(booksDb)
         }
 
-    override suspend fun getBookById(id: String, bookshelf: String): Book =
+    override suspend fun getBookById(id: String, bookshelf: Bookshelf): Book =
         withContext(dispatcher) {
             val bookDb = bookDao.getBook(id)
             return@withContext convertBookDbToBook(bookDb)
         }
 
-    override suspend fun addBookToBookshelf(book: Book, bookshelf: String): Unit =
+    override suspend fun addBookToBookshelf(book: Book, bookshelf: Bookshelf): Unit =
         withContext(dispatcher) {
-            val bookDb = convertBookToBookDb(book, bookshelf)
+            val bookDb = convertBookToBookDb(book, bookshelf.bookshelfTitle)
             bookDao.addBook(bookDb)
         }
 
-    override suspend fun deleteBookFromBookshelf(id: String, bookshelf: String): Unit =
+    override suspend fun deleteBookFromBookshelf(id: String, bookshelf: Bookshelf): Unit =
         withContext(dispatcher) {
-            bookDao.deleteBookFromBookshelfById(id, bookshelf)
+            bookDao.deleteBookFromBookshelfById(id, bookshelf.bookshelfTitle)
         }
 }

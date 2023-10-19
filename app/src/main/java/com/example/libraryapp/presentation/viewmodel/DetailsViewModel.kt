@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.libraryapp.domain.entity.Bookshelf
 import com.example.libraryapp.domain.repository.BookRepository
 import com.example.libraryapp.presentation.uistate.DetailsUIState
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class DetailsViewModel @Inject constructor(
         _uiState.value = DetailsUIState.Loading
         viewModelScope.launch {
             try {
-                val book = repository.getBookById(id, bookshelf)
+                val book = repository.getBookById(id, Bookshelf(bookshelf))
                 _uiState.value = DetailsUIState.Success(book)
             } catch (e: Exception) {
                 _uiState.value = DetailsUIState.Error(e::class.toString(), e.message.toString())
@@ -32,7 +33,7 @@ class DetailsViewModel @Inject constructor(
     fun deleteBook(id: String, bookshelf: String) {
         viewModelScope.launch {
             try {
-                repository.deleteBookFromBookshelf(id, bookshelf)
+                repository.deleteBookFromBookshelf(id, Bookshelf(bookshelf))
             } catch (e: Exception) {
                 _uiState.value = DetailsUIState.Error(e::class.toString(), e.message.toString())
             }

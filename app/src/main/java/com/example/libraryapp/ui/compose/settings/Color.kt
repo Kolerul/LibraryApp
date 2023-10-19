@@ -1,4 +1,4 @@
-package com.example.libraryapp.ui.compose
+package com.example.libraryapp.ui.compose.settings
 
 import androidx.compose.ui.graphics.Color
 
