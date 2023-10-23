@@ -8,4 +8,6 @@ interface BookshelfRepository {
     suspend fun deleteBookshelf(bookshelf: Bookshelf)
 
     suspend fun getAllBookshelves(): List<Bookshelf>
+
+    suspend fun getAllBookshelvesWithNumberOfBooks(): List<Pair<Bookshelf, Int>>
 }

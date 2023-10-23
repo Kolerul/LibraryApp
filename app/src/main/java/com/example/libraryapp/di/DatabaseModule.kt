@@ -19,7 +19,7 @@ class DatabaseModule {
             context,
             BookDatabase::class.java,
             "Book database"
-        ).build()
+        ).addMigrations(BookDatabase.compositePrimaryKeyMigration).build()
 
     @Singleton
     @Provides

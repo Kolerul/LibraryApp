@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "bookshelfs"
+    tableName = "bookshelves"
 )
 data class BookshelfDb(
     @PrimaryKey(autoGenerate = false)

@@ -4,5 +4,6 @@ import com.example.libraryapp.domain.entity.Bookshelf
 
 data class DrawerItem(
     val number: Int,
-    val bookshelf: Bookshelf
+    val bookshelf: Bookshelf,
+    val count: Int
 )

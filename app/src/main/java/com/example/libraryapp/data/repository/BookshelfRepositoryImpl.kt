@@ -1,6 +1,7 @@
 package com.example.libraryapp.data.repository
 
 import com.example.libraryapp.data.db.dao.BookshelfDao
+import com.example.libraryapp.data.util.convertListBookshelfWithBooksToPair
 import com.example.libraryapp.data.util.convertListToBookshelf
 import com.example.libraryapp.data.util.convertToBookshelfDb
 import com.example.libraryapp.domain.entity.Bookshelf
@@ -27,4 +28,10 @@ class BookshelfRepositoryImpl @Inject constructor(
         val response = bookshelfDao.getAllBookshelves()
         return@withContext convertListToBookshelf(response)
     }
+
+    override suspend fun getAllBookshelvesWithNumberOfBooks(): List<Pair<Bookshelf, Int>> =
+        withContext(dispatcher) {
+            val response = bookshelfDao.getAllBookshelvesWithBooks()
+            return@withContext convertListBookshelfWithBooksToPair(response)
+        }
 }

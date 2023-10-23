@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 3,
+    "version": 5,
     "identityHash": "56be8395a2a71b1fba9c8bdc9eed05e8",
     "entities": [
       {
@@ -74,7 +74,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "bookshelfs",
+        "tableName": "bookshelves",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bookshelfTitle` TEXT NOT NULL, PRIMARY KEY(`bookshelfTitle`))",
         "fields": [
           {

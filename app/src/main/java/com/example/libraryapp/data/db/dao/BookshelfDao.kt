@@ -5,7 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.example.libraryapp.data.db.enteties.BookshelfDb
+import com.example.libraryapp.data.db.enteties.BookshelfWithBooks
 
 @Dao
 interface BookshelfDao {
@@ -16,6 +18,10 @@ interface BookshelfDao {
     @Delete
     fun deleteBookshelf(bookshelf: BookshelfDb)
 
-    @Query("SELECT * FROM bookshelfs")
+    @Query("SELECT * FROM bookshelves")
     fun getAllBookshelves(): List<BookshelfDb>
+
+    @Transaction
+    @Query("SELECT * from bookshelves")
+    fun getAllBookshelvesWithBooks(): List<BookshelfWithBooks>
 }

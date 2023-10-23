@@ -18,7 +18,7 @@ interface BookDao {
     @Update
     fun updateBook(book: BookDb)
 
-    @Query("SELECT * FROM books WHERE bookId = :id")
+    @Query("SELECT * FROM books WHERE bookId = :id LIMIT 1")
     fun getBook(id: String): BookDb
 
     @Query("SELECT * FROM books ORDER BY title")

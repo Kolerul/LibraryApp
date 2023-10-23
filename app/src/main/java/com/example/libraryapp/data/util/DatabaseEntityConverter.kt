@@ -2,6 +2,7 @@ package com.example.libraryapp.data.util
 
 import com.example.libraryapp.data.db.enteties.BookDb
 import com.example.libraryapp.data.db.enteties.BookshelfDb
+import com.example.libraryapp.data.db.enteties.BookshelfWithBooks
 import com.example.libraryapp.domain.entity.Book
 import com.example.libraryapp.domain.entity.Bookshelf
 
@@ -46,6 +47,14 @@ fun convertBookDbToBook(book: BookDb): Book{
         id = book.bookId
     )
 }
+
+fun convertBookshelfWithBooksToPair(bookshelf: BookshelfWithBooks): Pair<Bookshelf, Int> =
+    Pair(convertToBookshelf(bookshelf.bookshelf), bookshelf.bookList.size)
+
+fun convertListBookshelfWithBooksToPair(list: List<BookshelfWithBooks>): List<Pair<Bookshelf, Int>> =
+    list.map { bookshelf ->
+        convertBookshelfWithBooksToPair(bookshelf)
+    }
 
 fun convertListBookDbToBook(list: List<BookDb>): List<Book> =
     list.map { book ->

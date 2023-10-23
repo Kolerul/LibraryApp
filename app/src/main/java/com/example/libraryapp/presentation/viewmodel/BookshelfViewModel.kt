@@ -30,26 +30,26 @@ class BookshelfViewModel @Inject constructor(
     fun getBooksFromBookshelf(bookshelf: Bookshelf) {
         _booksUIState.value = BookshelfUIState.Loading
         viewModelScope.launch {
-            try {
-                _booksUIState.value =
-                    BookshelfUIState.Success(bookRepository.getAllBooksFromBookshelf(bookshelf))
-            } catch (e: Exception) {
-                _booksUIState.value =
-                    BookshelfUIState.Error(e::class.toString(), e.message.toString())
-            }
+//            try {
+            _booksUIState.value =
+                BookshelfUIState.Success(bookRepository.getAllBooksFromBookshelf(bookshelf))
+//            } catch (e: Exception) {
+//                _booksUIState.value =
+//                    BookshelfUIState.Error(e::class.toString(), e.message.toString())
+//            }
         }
     }
 
     fun getAllBookshelves() {
         _bookshelfUIState.value = BookshelfListUiState.Loading
         viewModelScope.launch {
-            try {
-                _bookshelfUIState.value =
-                    BookshelfListUiState.Success(bookshelfRepository.getAllBookshelves())
-            } catch (e: Exception) {
-                _bookshelfUIState.value =
-                    BookshelfListUiState.Error(e::class.toString(), e.message.toString())
-            }
+//            try {
+            _bookshelfUIState.value =
+                BookshelfListUiState.Success(bookshelfRepository.getAllBookshelvesWithNumberOfBooks())
+//            } catch (e: Exception) {
+//                _bookshelfUIState.value =
+//                    BookshelfListUiState.Error(e::class.toString(), e.message.toString())
+//            }
         }
     }
 

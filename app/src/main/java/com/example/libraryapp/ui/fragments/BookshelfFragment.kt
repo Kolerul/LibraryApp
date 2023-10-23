@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
@@ -14,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.rememberTopAppBarState
@@ -28,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.example.libraryapp.R
 import androidx.core.os.bundleOf
@@ -68,33 +71,6 @@ class BookshelfFragment : Fragment() {
         }
     }
 
-    @Composable
-    private fun BooksObserver(state: BookshelfUIState) {
-        when (state) {
-            is BookshelfUIState.Initializing -> {
-
-            }
-
-            is BookshelfUIState.Loading -> {
-                CenterCircularProgressBar()
-            }
-
-            is BookshelfUIState.Success -> {
-                Bookshelf(
-                    state.books,
-                ) { id ->
-                    val bundle = bundleOf(DetailsFragment.ID_KEY to id)
-                    findNavController().navigate(
-                        R.id.action_bookshelfFragment_to_detailsFragment,
-                        bundle
-                    )
-                }
-            }
-
-            is BookshelfUIState.Error -> {}
-        }
-    }
-
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -132,7 +108,11 @@ class BookshelfFragment : Fragment() {
                                 }
                             }
                         },
-                        menuItems = listOf(AppBarItem(Icons.Filled.Add, "Add", {})),
+                        menuItems = listOf(AppBarItem(Icons.Filled.Add, "Add") {
+                            viewModel.createBookshelf(
+                                "Favourite"
+                            )
+                        }),
                         scrollBehavior = scrollBehavior
                     )
                 },
@@ -158,17 +138,45 @@ class BookshelfFragment : Fragment() {
             }
 
             is BookshelfListUiState.Success -> {
+                var index = 1
                 NavigationDrawer(
                     items = state.bookshelves.map { bookshelf ->
-                        DrawerItem(bookshelf.hashCode(), bookshelf)
+                        DrawerItem(index++, bookshelf.first, bookshelf.second)
                     },
                     onItemClick = { onBookshelfChange(it.bookshelf) },
                     headerTitle = "Bookshelves"
                 )
-                onBookshelfChange(state.bookshelves[0])
+                onBookshelfChange(state.bookshelves[0].first)
             }
 
             is BookshelfListUiState.Error -> {}
+        }
+    }
+
+    @Composable
+    private fun BooksObserver(state: BookshelfUIState) {
+        when (state) {
+            is BookshelfUIState.Initializing -> {
+                Text(text = "Initializing", modifier = Modifier.padding(20.dp))
+            }
+
+            is BookshelfUIState.Loading -> {
+                CenterCircularProgressBar()
+            }
+
+            is BookshelfUIState.Success -> {
+                Bookshelf(
+                    state.books,
+                ) { id ->
+                    val bundle = bundleOf(DetailsFragment.ID_KEY to id)
+                    findNavController().navigate(
+                        R.id.action_bookshelfFragment_to_detailsFragment,
+                        bundle
+                    )
+                }
+            }
+
+            is BookshelfUIState.Error -> {}
         }
     }
 }

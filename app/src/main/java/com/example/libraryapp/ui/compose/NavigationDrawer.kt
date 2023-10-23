@@ -67,6 +67,11 @@ fun DrawerBody(
                         .padding(5.dp)
                         .weight(1f)
                 )
+                Text(
+                    text = item.count.toString(),
+                    modifier = Modifier
+                        .padding(5.dp)
+                )
             }
         }
     }
