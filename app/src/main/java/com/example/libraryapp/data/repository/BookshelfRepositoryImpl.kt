@@ -4,9 +4,11 @@ import com.example.libraryapp.data.db.dao.BookshelfDao
 import com.example.libraryapp.data.util.convertListBookshelfWithBooksToPair
 import com.example.libraryapp.data.util.convertListToBookshelf
 import com.example.libraryapp.data.util.convertToBookshelfDb
-import com.example.libraryapp.domain.entity.Bookshelf
+import com.example.libraryapp.domain.model.Bookshelf
 import com.example.libraryapp.domain.repository.BookshelfRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -29,9 +31,11 @@ class BookshelfRepositoryImpl @Inject constructor(
         return@withContext convertListToBookshelf(response)
     }
 
-    override suspend fun getAllBookshelvesWithNumberOfBooks(): List<Pair<Bookshelf, Int>> =
-        withContext(dispatcher) {
-            val response = bookshelfDao.getAllBookshelvesWithBooks()
-            return@withContext convertListBookshelfWithBooksToPair(response)
+    override fun getAllBookshelvesWithNumberOfBooks(): Flow<List<Pair<Bookshelf, Int>>> {
+        val response = bookshelfDao.getAllBookshelvesWithBooks()
+        val listOfPairs = response.map { list ->
+            convertListBookshelfWithBooksToPair(list)
         }
+        return listOfPairs
+    }
 }

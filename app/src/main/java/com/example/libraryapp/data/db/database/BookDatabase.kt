@@ -11,8 +11,8 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.libraryapp.data.db.dao.BookDao
 import com.example.libraryapp.data.db.dao.BookshelfDao
-import com.example.libraryapp.data.db.enteties.BookDb
-import com.example.libraryapp.data.db.enteties.BookshelfDb
+import com.example.libraryapp.data.db.model.BookDb
+import com.example.libraryapp.data.db.model.BookshelfDb
 
 @Database(
     entities = [

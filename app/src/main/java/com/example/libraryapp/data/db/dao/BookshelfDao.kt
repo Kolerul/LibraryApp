@@ -6,8 +6,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.libraryapp.data.db.enteties.BookshelfDb
-import com.example.libraryapp.data.db.enteties.BookshelfWithBooks
+import com.example.libraryapp.data.db.model.BookshelfDb
+import com.example.libraryapp.data.db.model.BookshelfWithBooks
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookshelfDao {
@@ -23,5 +24,5 @@ interface BookshelfDao {
 
     @Transaction
     @Query("SELECT * from bookshelves")
-    fun getAllBookshelvesWithBooks(): List<BookshelfWithBooks>
+    fun getAllBookshelvesWithBooks(): Flow<List<BookshelfWithBooks>>
 }

@@ -1,6 +1,6 @@
 package com.example.libraryapp.ui.compose.item
 
-import com.example.libraryapp.domain.entity.Bookshelf
+import com.example.libraryapp.domain.model.Bookshelf
 
 data class DrawerItem(
     val number: Int,

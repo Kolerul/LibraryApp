@@ -1,4 +1,4 @@
-package com.example.libraryapp.domain.entity
+package com.example.libraryapp.domain.model
 
 data class Bookshelf(
     val bookshelfTitle: String

@@ -4,15 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.libraryapp.domain.entity.Book
-import com.example.libraryapp.domain.entity.Bookshelf
+import com.example.libraryapp.domain.model.Book
+import com.example.libraryapp.domain.model.Bookshelf
 import com.example.libraryapp.domain.repository.BookRepository
+import com.example.libraryapp.domain.repository.BookshelfRepository
 import com.example.libraryapp.presentation.uistate.SearchUIState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
-    private val repository: BookRepository
+    private val bookRepository: BookRepository,
+    private val bookshelfRepository: BookshelfRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<SearchUIState>(SearchUIState.Initialization)
@@ -23,7 +25,7 @@ class SearchViewModel @Inject constructor(
         _uiState.value = SearchUIState.Loading
         viewModelScope.launch {
             try {
-                val list = repository.getAllBooksByTitleAndAuthor(title, author)
+                val list = bookRepository.getAllBooksByTitleAndAuthor(title, author)
                 _uiState.value = SearchUIState.Success(list)
             } catch (e: Exception) {
                 _uiState.value = SearchUIState.Error(e::class.toString(), e.message.toString())
@@ -34,7 +36,7 @@ class SearchViewModel @Inject constructor(
     fun addBookToBookshelf(book: Book, bookshelf: String) {
         viewModelScope.launch {
             try {
-                repository.addBookToBookshelf(book, Bookshelf(bookshelf))
+                bookRepository.addBookToBookshelf(book, Bookshelf(bookshelf))
             } catch (e: Exception) {
                 _uiState.value = SearchUIState.Error(e::class.toString(), e.message.toString())
             }

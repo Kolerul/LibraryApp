@@ -1,10 +1,10 @@
 package com.example.libraryapp.data.util
 
-import com.example.libraryapp.data.db.enteties.BookDb
-import com.example.libraryapp.data.db.enteties.BookshelfDb
-import com.example.libraryapp.data.db.enteties.BookshelfWithBooks
-import com.example.libraryapp.domain.entity.Book
-import com.example.libraryapp.domain.entity.Bookshelf
+import com.example.libraryapp.data.db.model.BookDb
+import com.example.libraryapp.data.db.model.BookshelfDb
+import com.example.libraryapp.data.db.model.BookshelfWithBooks
+import com.example.libraryapp.domain.model.Book
+import com.example.libraryapp.domain.model.Bookshelf
 
 fun convertBookToBookDb(book: Book, bookshelf: String): BookDb{
     val authors = book.authors.joinToString(

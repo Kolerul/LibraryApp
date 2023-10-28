@@ -29,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.libraryapp.R
-import com.example.libraryapp.domain.entity.Book
+import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.ui.compose.settings.TestTheme
 
 @Composable

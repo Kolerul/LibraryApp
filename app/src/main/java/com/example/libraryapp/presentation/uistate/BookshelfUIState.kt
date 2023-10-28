@@ -1,6 +1,6 @@
 package com.example.libraryapp.presentation.uistate
 
-import com.example.libraryapp.domain.entity.Book
+import com.example.libraryapp.domain.model.Book
 
 sealed class BookshelfUIState {
     data object Initializing : BookshelfUIState()

@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import com.example.libraryapp.LibraryApp
 import com.example.libraryapp.R
 import com.example.libraryapp.databinding.FragmentDetailsBinding
-import com.example.libraryapp.domain.entity.Book
+import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.presentation.uistate.DetailsUIState
 import com.example.libraryapp.presentation.viewmodel.DetailsViewModel
 import com.google.android.material.snackbar.Snackbar

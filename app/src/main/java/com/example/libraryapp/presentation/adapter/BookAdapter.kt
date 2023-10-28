@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.libraryapp.databinding.BookItemBinding
-import com.example.libraryapp.domain.entity.Book
+import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.presentation.adapter.viewholder.BookViewHolder
 
 class BookAdapter(

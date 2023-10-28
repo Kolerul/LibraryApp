@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.libraryapp.R
 import com.example.libraryapp.databinding.BookItemBinding
-import com.example.libraryapp.domain.entity.Book
+import com.example.libraryapp.domain.model.Book
 
 class BookViewHolder(
     private val binding: BookItemBinding,
