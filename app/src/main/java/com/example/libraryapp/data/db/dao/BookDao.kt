@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.libraryapp.data.db.model.BookDb
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookDao {
@@ -23,9 +22,9 @@ interface BookDao {
     fun getBook(id: String): BookDb
 
     @Query("SELECT * FROM books ORDER BY title")
-    fun getAllBooks(): Flow<List<BookDb>>
+    fun getAllBooks(): List<BookDb>
 
     @Query("SELECT * FROM books WHERE bookshelf = :bookshelf ORDER BY title")
-    fun getAllBooksFromBookshelf(bookshelf: String): Flow<List<BookDb>>
+    fun getAllBooksFromBookshelf(bookshelf: String): List<BookDb>
 
 }

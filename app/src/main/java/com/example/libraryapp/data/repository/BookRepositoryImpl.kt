@@ -10,8 +10,6 @@ import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.domain.model.Bookshelf
 import com.example.libraryapp.domain.repository.BookRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,13 +35,11 @@ class BookRepositoryImpl @Inject constructor(
         return@withContext convertListInetBookToBook(response.items)
     }
 
-    override fun getAllBooksFromBookshelf(bookshelf: Bookshelf): Flow<List<Book>> {
-        val booksDb = bookDao.getAllBooksFromBookshelf(bookshelf.bookshelfTitle)
-        val books = booksDb.map { list ->
-            convertListBookDbToBook(list)
+    override suspend fun getAllBooksFromBookshelf(bookshelf: Bookshelf): List<Book> =
+        withContext(dispatcher) {
+            val booksDb = bookDao.getAllBooksFromBookshelf(bookshelf.bookshelfTitle)
+            return@withContext convertListBookDbToBook(booksDb)
         }
-        return books
-    }
 
     override suspend fun getBookById(id: String, bookshelf: Bookshelf): Book =
         withContext(dispatcher) {

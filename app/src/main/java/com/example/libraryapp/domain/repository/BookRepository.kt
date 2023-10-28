@@ -2,12 +2,11 @@ package com.example.libraryapp.domain.repository
 
 import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.domain.model.Bookshelf
-import kotlinx.coroutines.flow.Flow
 
 interface BookRepository {
     suspend fun getAllBooksByTitleAndAuthor(title: String, author: String): List<Book>
 
-    fun getAllBooksFromBookshelf(bookshelf: Bookshelf): Flow<List<Book>>
+    suspend fun getAllBooksFromBookshelf(bookshelf: Bookshelf): List<Book>
 
     suspend fun getBookById(id: String, bookshelf: Bookshelf): Book
 

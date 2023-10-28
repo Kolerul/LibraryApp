@@ -3,14 +3,11 @@ package com.example.libraryapp.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.domain.model.Bookshelf
 import com.example.libraryapp.domain.repository.BookRepository
 import com.example.libraryapp.domain.repository.BookshelfRepository
-import com.example.libraryapp.presentation.uistate.BookshelfListUiState
-import com.example.libraryapp.presentation.uistate.BookshelfUIState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,38 +22,40 @@ class BookshelfViewModel @Inject constructor(
     val bookshelf: LiveData<Bookshelf>
         get() = _bookshelf
 
-    private var _books: Flow<List<Book>> =
-        bookRepository.getAllBooksFromBookshelf(_bookshelf.value!!)
+    private var _books = MutableLiveData<List<Book>>(emptyList())
 
     val books: LiveData<List<Book>>
-        get() = _books.asLiveData()
+        get() = _books
 
     fun getBooksFromBookshelf(bookshelf: Bookshelf) {
-        _bookshelf.value = bookshelf
+        viewModelScope.launch {
+            _bookshelf.value = bookshelf
+            _books.value = bookRepository.getAllBooksFromBookshelf(_bookshelf.value!!)
+        }
     }
 
-    fun getAllBookshelves(): Flow<List<Pair<Bookshelf, Int>>> =
-        bookshelfRepository.getAllBookshelvesWithNumberOfBooks()
+    fun getAllBookshelves(): Flow<List<Pair<Bookshelf, Int>>> {
+        val flow = bookshelfRepository.getAllBookshelvesWithNumberOfBooks()
+        viewModelScope.launch {
+            flow.collect { list ->
+                if (list.isNotEmpty()) {
+                    getBooksFromBookshelf(list[0].first)
+                }
+            }
+        }
+        return flow
+    }
+
 
     fun createBookshelf(title: String) {
-//        viewModelScope.launch {
-//            try {
-//                bookshelfRepository.createBookshelf(title)
-//            } catch (e: Exception) {
-//                _bookshelfUIState.value =
-//                    BookshelfListUiState.Error(e::class.toString(), e.message.toString())
-//            }
-//        }
+        viewModelScope.launch {
+            bookshelfRepository.createBookshelf(title)
+        }
     }
 
     fun deleteBookshelf(bookshelf: Bookshelf) {
-//        viewModelScope.launch {
-//            try {
-//                bookshelfRepository.deleteBookshelf(bookshelf)
-//            } catch (e: Exception) {
-//                _bookshelfUIState.value =
-//                    BookshelfListUiState.Error(e::class.toString(), e.message.toString())
-//            }
-//        }
+        viewModelScope.launch {
+            bookshelfRepository.deleteBookshelf(bookshelf)
+        }
     }
 }

@@ -23,7 +23,9 @@ class BookshelfRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteBookshelf(bookshelf: Bookshelf) = withContext(dispatcher) {
-        bookshelfDao.deleteBookshelf(convertToBookshelfDb(bookshelf))
+        if (bookshelf.bookshelfTitle != "Favourite") {
+            bookshelfDao.deleteBookshelf(convertToBookshelfDb(bookshelf))
+        }
     }
 
     override suspend fun getAllBookshelves(): List<Bookshelf> = withContext(dispatcher) {
