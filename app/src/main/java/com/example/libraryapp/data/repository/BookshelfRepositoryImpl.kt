@@ -1,5 +1,6 @@
 package com.example.libraryapp.data.repository
 
+import com.example.libraryapp.data.db.dao.BookDao
 import com.example.libraryapp.data.db.dao.BookshelfDao
 import com.example.libraryapp.data.util.convertListBookshelfWithBooksToPair
 import com.example.libraryapp.data.util.convertListToBookshelf
@@ -14,6 +15,7 @@ import javax.inject.Inject
 
 class BookshelfRepositoryImpl @Inject constructor(
     private val bookshelfDao: BookshelfDao,
+    private val bookDao: BookDao,
     private val dispatcher: CoroutineDispatcher
 ) : BookshelfRepository {
 
@@ -24,6 +26,7 @@ class BookshelfRepositoryImpl @Inject constructor(
 
     override suspend fun deleteBookshelf(bookshelf: Bookshelf) = withContext(dispatcher) {
         if (bookshelf.bookshelfTitle != "Favourite") {
+            bookDao.deleteAllBooksFromBookshelf(bookshelf.bookshelfTitle)
             bookshelfDao.deleteBookshelf(convertToBookshelfDb(bookshelf))
         }
     }

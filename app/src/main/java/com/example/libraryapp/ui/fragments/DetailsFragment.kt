@@ -20,24 +20,27 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>(FragmentDetailsBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUIStateObserver()
-        setOnClickListeners()
+        val bookId: String = arguments?.getString(ID_KEY) ?: ""
+        val bookshelfTitle: String = arguments?.getString(BOOKSHELF_KEY) ?: ""
+
+        setUIStateObserver(bookId, bookshelfTitle)
+        setOnClickListeners(bookshelfTitle)
     }
 
-    private fun setOnClickListeners() {
+    private fun setOnClickListeners(bookshelfTitle: String) {
         binding.apply {
             deleteIcon.setOnClickListener {
                 if (viewModel.uiState.value is DetailsUIState.Success) {
                     viewModel.deleteBook(
                         (viewModel.uiState.value as DetailsUIState.Success).book.id,
-                        "Favourite"
+                        bookshelfTitle
                     )
                 }
             }
         }
     }
 
-    private fun setUIStateObserver() {
+    private fun setUIStateObserver(bookId: String, bookshelfTitle: String) {
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is DetailsUIState.Initialization -> {
@@ -45,8 +48,9 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>(FragmentDetailsBind
                         contentLayout.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
                     }
-                    val id = arguments?.getString(ID_KEY) ?: ""
-                    viewModel.getBook(id, "Favourite")
+
+
+                    viewModel.getBook(bookId, bookshelfTitle)
                 }
 
                 is DetailsUIState.Loading -> {
@@ -67,6 +71,8 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>(FragmentDetailsBind
                 is DetailsUIState.Error -> {
                     showSnackBar("Error ${state.errorType}: ${state.message}")
                 }
+
+                else -> {}
             }
         }
     }
@@ -102,5 +108,6 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>(FragmentDetailsBind
 
     companion object {
         const val ID_KEY = "id"
+        const val BOOKSHELF_KEY = "bookshelf"
     }
 }

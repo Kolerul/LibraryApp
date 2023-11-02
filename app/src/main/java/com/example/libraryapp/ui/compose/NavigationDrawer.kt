@@ -16,14 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.libraryapp.ui.compose.item.DrawerItem
+import com.example.libraryapp.ui.model.DrawerItem
 
 
 @Composable
 fun NavigationDrawer(
+    modifier: Modifier = Modifier,
     headerTitle: String = "Header",
     items: List<DrawerItem>,
-    modifier: Modifier = Modifier,
     onItemClick: (DrawerItem) -> Unit
 ) {
     Column(modifier = modifier.background(Color.White)) {

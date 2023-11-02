@@ -22,6 +22,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,12 +34,13 @@ import androidx.compose.ui.unit.dp
 import com.example.libraryapp.R
 import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.ui.compose.settings.TestTheme
+import com.example.libraryapp.ui.util.randomizeBookImage
 
 @Composable
 fun Bookshelf(
+    modifier: Modifier = Modifier,
     books: List<Book> = emptyList(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    modifier: Modifier = Modifier,
     onItemClick: (String) -> Unit = {}
 ) {
     LazyColumn(
@@ -84,6 +88,10 @@ fun BookItem(
     book: Book,
     modifier: Modifier = Modifier
 ) {
+    val imageId by rememberSaveable {
+        mutableIntStateOf(randomizeBookImage())
+    }
+
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -97,7 +105,7 @@ fun BookItem(
             modifier = Modifier.padding(10.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.danvich),
+                painter = painterResource(id = imageId),
                 contentDescription = "Book preview",
                 modifier = Modifier
                     .height(120.dp)

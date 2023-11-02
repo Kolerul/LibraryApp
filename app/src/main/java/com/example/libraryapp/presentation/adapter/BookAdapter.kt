@@ -9,14 +9,14 @@ import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.presentation.adapter.viewholder.BookViewHolder
 
 class BookAdapter(
-    private val onStarClickListener: (book: Book, bookshelf: String) -> Unit
+    private val onMoreClickListener: (Book) -> Unit
 ) : ListAdapter<Book, BookViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder =
         BookViewHolder(
             BookItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
-            onStarClickListener
+            onMoreClickListener
         )
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {

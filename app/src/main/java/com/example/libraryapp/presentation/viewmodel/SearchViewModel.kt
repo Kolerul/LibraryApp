@@ -7,14 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.domain.model.Bookshelf
 import com.example.libraryapp.domain.repository.BookRepository
-import com.example.libraryapp.domain.repository.BookshelfRepository
 import com.example.libraryapp.presentation.uistate.SearchUIState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
-    private val bookRepository: BookRepository,
-    private val bookshelfRepository: BookshelfRepository,
+    private val bookRepository: BookRepository
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<SearchUIState>(SearchUIState.Initialization)

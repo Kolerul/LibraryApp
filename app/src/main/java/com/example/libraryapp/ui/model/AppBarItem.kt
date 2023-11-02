@@ -1,4 +1,4 @@
-package com.example.libraryapp.ui.compose.item
+package com.example.libraryapp.ui.model
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

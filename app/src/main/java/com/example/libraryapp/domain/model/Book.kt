@@ -1,5 +1,6 @@
 package com.example.libraryapp.domain.model
 
+
 data class Book(
     val title: String = "",
     val authors: List<String> = emptyList(),

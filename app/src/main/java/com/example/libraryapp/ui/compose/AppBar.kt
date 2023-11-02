@@ -9,7 +9,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import com.example.libraryapp.ui.compose.item.AppBarItem
+import com.example.libraryapp.ui.model.AppBarItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

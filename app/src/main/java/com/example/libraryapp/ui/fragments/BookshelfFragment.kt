@@ -44,10 +44,10 @@ import com.example.libraryapp.LibraryApp
 import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.domain.model.Bookshelf
 import com.example.libraryapp.presentation.viewmodel.BookshelfViewModel
-import com.example.libraryapp.ui.compose.item.AppBarItem
+import com.example.libraryapp.ui.model.AppBarItem
 import com.example.libraryapp.ui.compose.Bookshelf
 import com.example.libraryapp.ui.compose.DialogWithTextField
-import com.example.libraryapp.ui.compose.item.DrawerItem
+import com.example.libraryapp.ui.model.DrawerItem
 import com.example.libraryapp.ui.compose.NavigationDrawer
 import com.example.libraryapp.ui.compose.SimpleAlertDialog
 import com.example.libraryapp.ui.compose.TopAppBar
@@ -203,9 +203,13 @@ class BookshelfFragment : Fragment() {
             }
         } else {
             Bookshelf(
-                list,
+                books = list,
             ) { id ->
-                val bundle = bundleOf(DetailsFragment.ID_KEY to id)
+                val bundle = bundleOf(
+                    DetailsFragment.ID_KEY to id,
+                    DetailsFragment.BOOKSHELF_KEY to (viewModel.bookshelf.value?.bookshelfTitle
+                        ?: "")
+                )
                 findNavController().navigate(
                     R.id.action_bookshelfFragment_to_detailsFragment,
                     bundle

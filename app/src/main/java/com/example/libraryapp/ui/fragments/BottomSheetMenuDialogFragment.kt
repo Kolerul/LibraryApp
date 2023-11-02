@@ -1,0 +1,75 @@
+package com.example.libraryapp.ui.fragments
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.fragment.app.viewModels
+import com.example.libraryapp.LibraryApp
+import com.example.libraryapp.databinding.BottomSheetMenuBinding
+import com.example.libraryapp.presentation.adapter.MenuAdapter
+import com.example.libraryapp.presentation.viewmodel.BookMenuViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+
+private const val COLLAPSED_HEIGHT = 120
+
+class BottomSheetMenuDialogFragment : BottomSheetDialogFragment() {
+
+    private var _binding: BottomSheetMenuBinding? = null
+    private val binding: BottomSheetMenuBinding
+        get() = _binding!!
+
+    private val bookMenuViewModel: BookMenuViewModel by viewModels {
+        (requireActivity().application as LibraryApp).appComponent.viewModelsFactory()
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = BottomSheetMenuBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val density = requireContext().resources.displayMetrics.density
+
+        val adapter = MenuAdapter {
+            //dismiss()
+        }
+        binding.menuItemsList.adapter = adapter
+        adapter.submitList(bookMenuViewModel.menu)
+
+        val list = bookMenuViewModel.menu
+        adapter.submitList(list)
+
+        bookMenuViewModel.book.observe(viewLifecycleOwner) { book ->
+            binding.title.text = book.title
+        }
+
+        dialog?.let {
+            val bottomSheet =
+                it.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
+            val behavior = BottomSheetBehavior.from(bottomSheet)
+
+            behavior.peekHeight = (COLLAPSED_HEIGHT * density).toInt()
+            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
+    companion object {
+        val TAG = BottomSheetMenuDialogFragment::class.toString()
+    }
+}
