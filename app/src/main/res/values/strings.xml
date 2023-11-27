@@ -8,4 +8,12 @@
     <string name="categories_info">Categories: %s</string>
     <string name="show_more">Show more</string>
     <string name="show_less">Show less</string>
+    <string name="add_to_favourite">Add to Favourite</string>
+    <string name="add_to_bookshelf">Add to bookshelf</string>
+    <string name="create_bookshelf_and_add">Create bookshelf and add book</string>
+    <string name="create_bookshelf">Create bookshelf</string>
+    <string name="bookshelf_title">Bookshelf title</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="select_bookshelf">Select bookshelf</string>
 </resources>

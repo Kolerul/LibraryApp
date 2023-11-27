@@ -3,18 +3,18 @@ package com.example.libraryapp.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.example.libraryapp.LibraryApp
-import com.example.libraryapp.R
 import com.example.libraryapp.databinding.FragmentSearchBinding
 import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.presentation.adapter.BookAdapter
 import com.example.libraryapp.presentation.uistate.SearchUIState
-import com.example.libraryapp.presentation.viewmodel.BookMenuViewModel
-import com.example.libraryapp.presentation.viewmodel.BookshelfMenuViewModel
+import com.example.libraryapp.presentation.viewmodel.BookViewModel
 import com.example.libraryapp.presentation.viewmodel.SearchViewModel
-import com.example.libraryapp.ui.model.MenuItem
 import com.google.android.material.snackbar.Snackbar
+import javax.inject.Inject
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate) {
 
@@ -22,25 +22,32 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         (requireActivity().application as LibraryApp).appComponent.viewModelsFactory()
     }
 
-    private val bookMenuViewModel: BookMenuViewModel by viewModels {
+    private val bookViewModel: BookViewModel by activityViewModels {
         (requireActivity().application as LibraryApp).appComponent.viewModelsFactory()
     }
 
-    private val bookshelfMenuViewModel: BookshelfMenuViewModel by viewModels {
-        (requireActivity().application as LibraryApp).appComponent.viewModelsFactory()
+    @Inject
+    lateinit var menuDialog: BottomSheetMenuDialogFragment
+
+    @Inject
+    lateinit var bookshelfMenuDialog: BottomSheetBookshelfMenuDialogFragment
+
+    @Inject
+    lateinit var createBookshelfDialog: CreateBookshelfDialogFragment
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (requireActivity().application as LibraryApp).appComponent.inject(this)
     }
-
-    private val menuDialog = BottomSheetMenuDialogFragment()
-
-    private val bookshelfMenuDialog = BottomSheetBookshelfMenuDialogFragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUIStateObserver()
         setOnClickListeners()
-        createBottomSheetMenu()
-        setSelectedBookshelfObserver()
+        setBottomSheetMenuListener()
+        setAddTooBookshelfListener()
+        setCreateBookshelfDialogListener()
     }
 
     private fun setOnClickListeners() {
@@ -93,15 +100,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         }
     }
 
-    private fun setSelectedBookshelfObserver() {
-        bookshelfMenuViewModel.selectedBookshelf.observe(viewLifecycleOwner) { bookshelf ->
-            val book = bookMenuViewModel.book.value
-            book?.let {
-                viewModel.addBookToBookshelf(it, bookshelf.bookshelfTitle)
-            }
-        }
-    }
-
     private fun setAdapter(list: List<Book>) {
         val adapter = BookAdapter { book ->
             showBottomSheetMenu(book)
@@ -120,24 +118,58 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
         snackBar.show()
     }
 
-    private fun createBottomSheetMenu() {
-        val menuItemFavourite = MenuItem(R.drawable.ic_favourite, "Add to favourite") {
-            val book = bookMenuViewModel.book.value
-            book?.let {
-                viewModel.addBookToBookshelf(book, "Favourite")
+
+    private fun setBottomSheetMenuListener() {
+        setFragmentResultListener(BottomSheetMenuDialogFragment.REQUEST_KEY) { _, bundle ->
+            val result = bundle.getInt(BottomSheetMenuDialogFragment.MENU_ITEM_KEY)
+            when (result) {
+                1 -> {
+
+                    val book = bookViewModel.book.value
+                    book?.let {
+                        bookViewModel.addBookToBookshelf(book, "Favourite")
+                    }
+                }
+
+                2 -> {
+                    showBottomSheetBookshelfMenu()
+                }
+
+                3 -> {
+                    showCreateBookshelfDialog()
+                }
+            }
+            menuDialog.dismiss()
+        }
+    }
+
+    private fun showCreateBookshelfDialog() {
+        createBookshelfDialog.show(parentFragmentManager, CreateBookshelfDialogFragment.TAG)
+    }
+
+    private fun setCreateBookshelfDialogListener() {
+        setFragmentResultListener(CreateBookshelfDialogFragment.REQUEST_KEY) { _, bundle ->
+            val bookshelfTitle = bundle.getString(CreateBookshelfDialogFragment.RESPONSE_KEY)
+            val book = bookViewModel.book.value
+            if (bookshelfTitle != null && book != null) {
+                bookViewModel.addBookToBookshelf(book, bookshelfTitle)
             }
         }
-        val menuItemAddToBookshelf = MenuItem(R.drawable.ic_add, "Add to bookshelf") {
-            showBottomSheetBookshelfMenu()
+    }
+
+    private fun setAddTooBookshelfListener() {
+        setFragmentResultListener(BottomSheetBookshelfMenuDialogFragment.REQUEST_KEY) { _, bundle ->
+            val bookshelfTitle =
+                bundle.getString(BottomSheetBookshelfMenuDialogFragment.RESPONSE_KEY)
+            val book = bookViewModel.book.value
+            if (bookshelfTitle != null && book != null) {
+                bookViewModel.addBookToBookshelf(book, bookshelfTitle)
+            }
         }
-        val menuItemCreateBookshelf = MenuItem(R.drawable.ic_create, "Create bookshelf") { }
-        bookMenuViewModel.addMenuItem(menuItemFavourite)
-        bookMenuViewModel.addMenuItem(menuItemAddToBookshelf)
-        bookMenuViewModel.addMenuItem(menuItemCreateBookshelf)
     }
 
     private fun showBottomSheetMenu(book: Book) {
-        bookMenuViewModel.selectBook(book)
+        bookViewModel.selectBook(book)
         menuDialog.show(parentFragmentManager, BottomSheetMenuDialogFragment.TAG)
     }
 

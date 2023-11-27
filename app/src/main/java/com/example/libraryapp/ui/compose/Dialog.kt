@@ -60,7 +60,8 @@ fun DialogWithTextField(
                 )
                 OutlinedTextField(
                     value = text,
-                    onValueChange = { text = it }
+                    onValueChange = { text = it },
+                    maxLines = 1
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),

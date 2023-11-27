@@ -5,23 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.fragment.app.viewModels
+import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import com.example.libraryapp.LibraryApp
 import com.example.libraryapp.databinding.BottomSheetMenuBinding
-import com.example.libraryapp.presentation.adapter.MenuAdapter
-import com.example.libraryapp.presentation.viewmodel.BookMenuViewModel
+import com.example.libraryapp.presentation.viewmodel.BookViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import javax.inject.Inject
 
 private const val COLLAPSED_HEIGHT = 120
 
-class BottomSheetMenuDialogFragment : BottomSheetDialogFragment() {
+class BottomSheetMenuDialogFragment @Inject constructor() : BottomSheetDialogFragment() {
 
     private var _binding: BottomSheetMenuBinding? = null
     private val binding: BottomSheetMenuBinding
         get() = _binding!!
 
-    private val bookMenuViewModel: BookMenuViewModel by viewModels {
+
+    private val bookViewModel: BookViewModel by activityViewModels {
         (requireActivity().application as LibraryApp).appComponent.viewModelsFactory()
     }
 
@@ -40,17 +43,23 @@ class BottomSheetMenuDialogFragment : BottomSheetDialogFragment() {
 
         val density = requireContext().resources.displayMetrics.density
 
-        val adapter = MenuAdapter {
-            //dismiss()
-        }
-        binding.menuItemsList.adapter = adapter
-        adapter.submitList(bookMenuViewModel.menu)
 
-        val list = bookMenuViewModel.menu
-        adapter.submitList(list)
-
-        bookMenuViewModel.book.observe(viewLifecycleOwner) { book ->
+        bookViewModel.book.observe(viewLifecycleOwner) { book ->
             binding.title.text = book.title
+        }
+
+        binding.apply {
+            addToFavouriteButton.setOnClickListener {
+                setFragmentResult(REQUEST_KEY, bundleOf(MENU_ITEM_KEY to 1))
+            }
+
+            addToBookshelfButton.setOnClickListener {
+                setFragmentResult(REQUEST_KEY, bundleOf(MENU_ITEM_KEY to 2))
+            }
+
+            createBookshelfButton.setOnClickListener {
+                setFragmentResult(REQUEST_KEY, bundleOf(MENU_ITEM_KEY to 3))
+            }
         }
 
         dialog?.let {
@@ -71,5 +80,7 @@ class BottomSheetMenuDialogFragment : BottomSheetDialogFragment() {
 
     companion object {
         val TAG = BottomSheetMenuDialogFragment::class.toString()
+        const val REQUEST_KEY = "bottom sheet  menu request key"
+        const val MENU_ITEM_KEY = "menu item key"
     }
 }

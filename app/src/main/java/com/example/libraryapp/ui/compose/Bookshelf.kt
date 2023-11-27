@@ -45,8 +45,7 @@ fun Bookshelf(
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = modifier.padding(start = 10.dp, end = 10.dp),
-        contentPadding = contentPadding
+        modifier = modifier.padding(contentPadding)
     ) {
         items(books) {
             BookItemBackground(
@@ -67,7 +66,8 @@ fun BookItemBackground(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(start = 10.dp, end = 10.dp),
         elevation = CardDefaults.cardElevation(8.dp)
     ) {
         Surface(
@@ -93,7 +93,8 @@ fun BookItem(
     }
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
     ) {
         Text(
             text = book.title,

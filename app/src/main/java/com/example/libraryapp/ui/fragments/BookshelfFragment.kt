@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -141,9 +142,9 @@ class BookshelfFragment : Fragment() {
                         scrollBehavior = scrollBehavior
                     )
                 },
-            ) {
+            ) { paddingValues ->
                 val bookState = viewModel.books.observeAsState()
-                BooksObserver(list = bookState.value)
+                BooksObserver(list = bookState.value, paddingValues)
 
                 if (showAddBookshelfDialog) {
                     DialogWithTextField(
@@ -192,7 +193,10 @@ class BookshelfFragment : Fragment() {
 
 
     @Composable
-    private fun BooksObserver(list: List<Book>?) {
+    private fun BooksObserver(
+        list: List<Book>?,
+        paddingValues: PaddingValues
+    ) {
         if (list.isNullOrEmpty()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -204,6 +208,7 @@ class BookshelfFragment : Fragment() {
         } else {
             Bookshelf(
                 books = list,
+                contentPadding = paddingValues
             ) { id ->
                 val bundle = bundleOf(
                     DetailsFragment.ID_KEY to id,

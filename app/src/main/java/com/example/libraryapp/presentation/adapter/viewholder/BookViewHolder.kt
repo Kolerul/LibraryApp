@@ -1,11 +1,14 @@
 package com.example.libraryapp.presentation.adapter.viewholder
 
+
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.libraryapp.R
 import com.example.libraryapp.databinding.BookItemBinding
 import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.ui.util.randomizeBookImage
+
 
 class BookViewHolder(
     private val binding: BookItemBinding,
@@ -39,10 +42,14 @@ class BookViewHolder(
                 )
             )
 
-            previewImage.load({ "https://ru.m.wikipedia.org/wiki/Файл:${book.title}.jpg" }) {
+
+
+            previewImage.load(book.imageUrl) {
                 placeholder(R.drawable.loading_animation)
                 error(randomizeBookImage())
             }
+
+            Log.d("ViewHolder", book.imageUrl)
 
             moreIcon.setOnClickListener {
                 onMoreClickListener(book)

@@ -8,8 +8,10 @@ interface BookApi {
 
     @GET("volumes")
     suspend fun getVolumes(
-        @Query("q") intelligence: String
+        @Query("q") intelligence: String,
+        @Query("key") apiKey: String
     ): BookResponse
+
 
     companion object{
         const val BASE_URL = "https://www.googleapis.com/books/v1/"

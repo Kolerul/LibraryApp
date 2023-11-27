@@ -18,7 +18,7 @@ class BookshelfViewModel @Inject constructor(
     private val bookshelfRepository: BookshelfRepository
 ) : ViewModel() {
 
-    private var _bookshelf = MutableLiveData(Bookshelf("Favourite"))
+    private var _bookshelf = MutableLiveData(Bookshelf(""))
     val bookshelf: LiveData<Bookshelf>
         get() = _bookshelf
 
@@ -40,6 +40,8 @@ class BookshelfViewModel @Inject constructor(
             flow.collect { list ->
                 if (list.isNotEmpty()) {
                     getBooksFromBookshelf(list[0].first)
+                } else {
+                    bookshelfRepository.createBookshelf("Favourite")
                 }
             }
         }

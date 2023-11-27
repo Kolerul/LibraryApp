@@ -1,11 +1,13 @@
 package com.example.libraryapp.data.repository
 
 import com.example.libraryapp.data.db.dao.BookDao
+import com.example.libraryapp.data.db.dao.BookshelfDao
 import com.example.libraryapp.data.network.api.BookApi
 import com.example.libraryapp.data.util.convertBookDbToBook
 import com.example.libraryapp.data.util.convertBookToBookDb
 import com.example.libraryapp.data.util.convertListBookDbToBook
 import com.example.libraryapp.data.util.convertListInetBookToBook
+import com.example.libraryapp.data.util.convertToBookshelfDb
 import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.domain.model.Bookshelf
 import com.example.libraryapp.domain.repository.BookRepository
@@ -18,6 +20,7 @@ import javax.inject.Singleton
 class BookRepositoryImpl @Inject constructor(
     private val bookApi: BookApi,
     private val bookDao: BookDao,
+    private val bookshelfDao: BookshelfDao,
     private val dispatcher: CoroutineDispatcher
 ): BookRepository {
 
@@ -31,7 +34,7 @@ class BookRepositoryImpl @Inject constructor(
             ""
         }
         val request = part1 + part2
-        val response = bookApi.getVolumes(request)
+        val response = bookApi.getVolumes(request, API_KEY)
         return@withContext convertListInetBookToBook(response.items)
     }
 
@@ -49,6 +52,13 @@ class BookRepositoryImpl @Inject constructor(
 
     override suspend fun addBookToBookshelf(book: Book, bookshelf: Bookshelf): Unit =
         withContext(dispatcher) {
+            val bookshelves = bookshelfDao.getAllBookshelves()
+            val bookshelvesTitles = bookshelves.map { bookshelfDb ->
+                bookshelfDb.bookshelfTitle
+            }
+            if (!bookshelvesTitles.contains(bookshelf.bookshelfTitle)) {
+                bookshelfDao.insertBookshelf(convertToBookshelfDb(bookshelf))
+            }
             val bookDb = convertBookToBookDb(book, bookshelf.bookshelfTitle)
             bookDao.addBook(bookDb)
         }
@@ -57,4 +67,6 @@ class BookRepositoryImpl @Inject constructor(
         withContext(dispatcher) {
             bookDao.deleteBookFromBookshelfById(id, bookshelf.bookshelfTitle)
         }
+
+    private val API_KEY = "AIzaSyAtUuma6RluGjpPfNZ8sC1y38mieCiVMg0"
 }

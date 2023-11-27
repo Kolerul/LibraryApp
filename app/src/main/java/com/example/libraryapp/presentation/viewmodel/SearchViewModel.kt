@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.libraryapp.domain.model.Book
-import com.example.libraryapp.domain.model.Bookshelf
 import com.example.libraryapp.domain.repository.BookRepository
 import com.example.libraryapp.presentation.uistate.SearchUIState
 import kotlinx.coroutines.launch
@@ -25,16 +23,6 @@ class SearchViewModel @Inject constructor(
             try {
                 val list = bookRepository.getAllBooksByTitleAndAuthor(title, author)
                 _uiState.value = SearchUIState.Success(list)
-            } catch (e: Exception) {
-                _uiState.value = SearchUIState.Error(e::class.toString(), e.message.toString())
-            }
-        }
-    }
-
-    fun addBookToBookshelf(book: Book, bookshelf: String) {
-        viewModelScope.launch {
-            try {
-                bookRepository.addBookToBookshelf(book, Bookshelf(bookshelf))
             } catch (e: Exception) {
                 _uiState.value = SearchUIState.Error(e::class.toString(), e.message.toString())
             }

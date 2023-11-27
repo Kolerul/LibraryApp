@@ -2,6 +2,7 @@ package com.example.libraryapp.di
 
 import android.content.Context
 import com.example.libraryapp.presentation.viewmodel.ViewModelFactory
+import com.example.libraryapp.ui.fragments.SearchFragment
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -22,4 +23,6 @@ interface AppComponent {
     }
 
     fun viewModelsFactory(): ViewModelFactory
+
+    fun inject(fragment: SearchFragment)
 }

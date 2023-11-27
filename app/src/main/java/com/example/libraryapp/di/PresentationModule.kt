@@ -3,7 +3,7 @@ package com.example.libraryapp.di
 import androidx.lifecycle.ViewModel
 import com.example.libraryapp.presentation.viewmodel.BookshelfViewModel
 import com.example.libraryapp.presentation.viewmodel.DetailsViewModel
-import com.example.libraryapp.presentation.viewmodel.BookMenuViewModel
+import com.example.libraryapp.presentation.viewmodel.BookViewModel
 import com.example.libraryapp.presentation.viewmodel.BookshelfMenuViewModel
 import com.example.libraryapp.presentation.viewmodel.SearchViewModel
 import dagger.Binds
@@ -32,8 +32,8 @@ interface PresentationModule {
     @Singleton
     @Binds
     @IntoMap
-    @ViewModelKey(BookMenuViewModel::class)
-    fun bindMenuViewModel(viewModel: BookMenuViewModel): ViewModel
+    @ViewModelKey(BookViewModel::class)
+    fun bindMenuViewModel(viewModel: BookViewModel): ViewModel
 
     @Singleton
     @Binds
