@@ -25,16 +25,18 @@ class BookRepositoryImpl @Inject constructor(
 ): BookRepository {
 
     override suspend fun getAllBooksByTitleAndAuthor(title: String, author: String): List<Book> = withContext(dispatcher){
-        val part1 = title.ifBlank {
-            ""
-        }
-        val part2 = if (author.isNotBlank()) {
+        val request = if (title.isNotBlank() && author.isNotBlank())
+            "$title+inauthor:$author"
+        else if (title.isBlank())
             "inauthor:$author"
-        } else {
-            ""
-        }
-        val request = part1 + part2
-        val response = bookApi.getVolumes(request, API_KEY)
+        else
+            title
+        val response = bookApi.getVolumes(
+            intelligence = request,
+            title = title,
+            author = author,
+            apiKey = API_KEY
+        )
         return@withContext convertListInetBookToBook(response.items)
     }
 
@@ -68,5 +70,7 @@ class BookRepositoryImpl @Inject constructor(
             bookDao.deleteBookFromBookshelfById(id, bookshelf.bookshelfTitle)
         }
 
-    private val API_KEY = "AIzaSyAtUuma6RluGjpPfNZ8sC1y38mieCiVMg0"
+    companion object {
+        const val API_KEY = "AIzaSyAtUuma6RluGjpPfNZ8sC1y38mieCiVMg0"
+    }
 }

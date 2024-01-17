@@ -28,6 +28,10 @@ class MainActivity : AppCompatActivity() {
             button2.setOnClickListener {
                 findNavController(R.id.nav_host_controller).navigate(R.id.action_global_bookshelfFragment)
             }
+
+            button3.setOnClickListener {
+                findNavController(R.id.nav_host_controller).navigate(R.id.action_global_compilationFragment)
+            }
         }
     }
 }

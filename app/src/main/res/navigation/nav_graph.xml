@@ -34,4 +34,13 @@
             android:name="id"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/compilationFragment"
+        android:name="com.example.libraryapp.ui.fragments.CompilationFragment"
+        android:label="CompilationFragment" />
+    <action
+        android:id="@+id/action_global_compilationFragment"
+        app:destination="@id/compilationFragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true" />
 </navigation>

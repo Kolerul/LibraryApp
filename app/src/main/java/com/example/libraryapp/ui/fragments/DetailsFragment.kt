@@ -3,6 +3,7 @@ package com.example.libraryapp.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import coil.load
 import com.example.libraryapp.LibraryApp
 import com.example.libraryapp.R
 import com.example.libraryapp.databinding.FragmentDetailsBinding
@@ -97,6 +98,17 @@ class DetailsFragment : BaseFragment<FragmentDetailsBinding>(FragmentDetailsBind
                 R.string.publisher_info, book.publisher
             )
             description.text = book.description
+
+            bookImage.load(book.imageUrl.replace("http", "https")) {
+                crossfade(true)
+                placeholder(R.drawable.loading_animation)
+                error(R.drawable.ic_image_not_found)
+            }
+
+            background.load(book.imageUrl.replace("http", "https")) {
+                crossfade(true)
+                placeholder(R.drawable.loading_animation)
+            }
         }
     }
 

@@ -141,7 +141,7 @@ class BookshelfFragment : Fragment() {
                         ),
                         scrollBehavior = scrollBehavior
                     )
-                },
+                }
             ) { paddingValues ->
                 val bookState = viewModel.books.observeAsState()
                 BooksObserver(list = bookState.value, paddingValues)

@@ -5,6 +5,7 @@ import com.example.libraryapp.presentation.viewmodel.BookshelfViewModel
 import com.example.libraryapp.presentation.viewmodel.DetailsViewModel
 import com.example.libraryapp.presentation.viewmodel.BookViewModel
 import com.example.libraryapp.presentation.viewmodel.BookshelfMenuViewModel
+import com.example.libraryapp.presentation.viewmodel.CompilationViewModel
 import com.example.libraryapp.presentation.viewmodel.SearchViewModel
 import dagger.Binds
 import dagger.Module
@@ -40,4 +41,10 @@ interface PresentationModule {
     @IntoMap
     @ViewModelKey(BookshelfMenuViewModel::class)
     fun bindBookshelfMenuViewModel(viewModel: BookshelfMenuViewModel): ViewModel
+
+    @Singleton
+    @Binds
+    @IntoMap
+    @ViewModelKey(CompilationViewModel::class)
+    fun bindCompilationViewModel(viewModel: CompilationViewModel): ViewModel
 }

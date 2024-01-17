@@ -1,7 +1,6 @@
 package com.example.libraryapp.ui.compose
 
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,19 +21,18 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.libraryapp.R
 import com.example.libraryapp.domain.model.Book
 import com.example.libraryapp.ui.compose.settings.TestTheme
-import com.example.libraryapp.ui.util.randomizeBookImage
 
 @Composable
 fun Bookshelf(
@@ -88,10 +86,6 @@ fun BookItem(
     book: Book,
     modifier: Modifier = Modifier
 ) {
-    val imageId by rememberSaveable {
-        mutableIntStateOf(randomizeBookImage())
-    }
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -105,12 +99,17 @@ fun BookItem(
         Row(
             modifier = Modifier.padding(10.dp)
         ) {
-            Image(
-                painter = painterResource(id = imageId),
-                contentDescription = "Book preview",
+            AsyncImage(
                 modifier = Modifier
                     .height(120.dp)
-                    .padding(end = 10.dp)
+                    .padding(end = 10.dp),
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data(book.imageUrl.replace("http", "https"))
+                    .crossfade(true)
+                    .build(),
+                error = painterResource(id = R.drawable.ic_image_not_found),
+                contentDescription = stringResource(id = R.string.book_preview),
+                placeholder = painterResource(id = R.drawable.placeholder)
             )
             Column {
                 Text(

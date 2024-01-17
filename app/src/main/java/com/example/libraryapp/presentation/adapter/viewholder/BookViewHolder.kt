@@ -7,7 +7,6 @@ import coil.load
 import com.example.libraryapp.R
 import com.example.libraryapp.databinding.BookItemBinding
 import com.example.libraryapp.domain.model.Book
-import com.example.libraryapp.ui.util.randomizeBookImage
 
 
 class BookViewHolder(
@@ -44,9 +43,10 @@ class BookViewHolder(
 
 
 
-            previewImage.load(book.imageUrl) {
+            previewImage.load(book.imageUrl.replace("http", "https")) {
+                crossfade(true)
                 placeholder(R.drawable.loading_animation)
-                error(randomizeBookImage())
+                error(R.drawable.ic_image_not_found)
             }
 
             Log.d("ViewHolder", book.imageUrl)
@@ -56,6 +56,4 @@ class BookViewHolder(
             }
         }
     }
-
-
 }

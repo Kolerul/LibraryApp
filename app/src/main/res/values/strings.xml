@@ -16,4 +16,7 @@
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
     <string name="select_bookshelf">Select bookshelf</string>
+    <string name="book_preview">Book preview</string>
+    <string name="books">Books</string>
+    <string name="magazines">Magazines</string>
 </resources>

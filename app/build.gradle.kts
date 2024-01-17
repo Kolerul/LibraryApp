@@ -74,10 +74,9 @@ dependencies {
     val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
-    val okHttpversion = "4.11.0"
-    implementation("com.squareup.okhttp3:okhttp:$okHttpversion")
-    implementation("com.squareup.okhttp3:logging-interceptor:$okHttpversion")
 
     val daggerVersion = "2.48"
     implementation("com.google.dagger:dagger:$daggerVersion")
@@ -98,8 +97,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
 
     implementation("io.coil-kt:coil:2.2.2")
-    implementation("io.coil-kt:coil-compose:2.0.0-rc01")
-    implementation("com.squareup.picasso:picasso:2.8")
+    implementation("io.coil-kt:coil-compose:2.2.2")
 
     val composeVersion = "1.7.2"
     implementation("androidx.activity:activity-compose:$composeVersion")
