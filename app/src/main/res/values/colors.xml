@@ -6,4 +6,6 @@
     <color name="white_alpha0.7">#B3FFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="gold">#FFB300</color>
+    <color name="dark_red">#9A1C22</color>
+    <color name="alpha_0">#00FFFFFF</color>
 </resources>

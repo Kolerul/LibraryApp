@@ -15,22 +15,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setOnClickListeners()
     }
 
     private fun setOnClickListeners() {
         binding.apply {
-            button1.setOnClickListener {
-                findNavController(R.id.nav_host_controller).navigate(R.id.action_global_searchFragment)
-            }
+            bottomNavigation.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.compilation_screen_button -> {
+                        findNavController(R.id.nav_host_controller).navigate(R.id.action_global_compilationFragment)
+                        true
+                    }
 
-            button2.setOnClickListener {
-                findNavController(R.id.nav_host_controller).navigate(R.id.action_global_bookshelfFragment)
-            }
+                    R.id.search_screen_button -> {
+                        findNavController(R.id.nav_host_controller).navigate(R.id.action_global_searchFragment)
+                        true
+                    }
 
-            button3.setOnClickListener {
-                findNavController(R.id.nav_host_controller).navigate(R.id.action_global_compilationFragment)
+                    R.id.library_screen_button -> {
+                        findNavController(R.id.nav_host_controller).navigate(R.id.action_global_bookshelfFragment)
+                        true
+                    }
+
+                    else -> false
+                }
+
             }
         }
     }

@@ -70,21 +70,24 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 is SearchUIState.Initialization -> {
                     binding.apply {
                         progressBar.visibility = View.GONE
-                        contentLayout.visibility = View.VISIBLE
+                        searchButton.isEnabled = true
+                        //contentLayout.visibility = View.VISIBLE
                     }
                 }
 
                 is SearchUIState.Loading -> {
                     binding.apply {
                         progressBar.visibility = View.VISIBLE
-                        contentLayout.visibility = View.GONE
+                        searchButton.isEnabled = false
+                        //contentLayout.visibility = View.GONE
                     }
                 }
 
                 is SearchUIState.Success -> {
                     binding.apply {
                         progressBar.visibility = View.GONE
-                        contentLayout.visibility = View.VISIBLE
+                        searchButton.isEnabled = true
+                        //contentLayout.visibility = View.VISIBLE
                     }
                     setAdapter(state.dataList)
                 }
@@ -92,7 +95,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 is SearchUIState.Error -> {
                     binding.apply {
                         progressBar.visibility = View.GONE
-                        contentLayout.visibility = View.VISIBLE
+                        searchButton.isEnabled = true
+                        //contentLayout.visibility = View.VISIBLE
                     }
                     showSnackBar("Error ${state.errorType}: ${state.message}")
                 }

@@ -57,7 +57,7 @@ class CompilationRepositoryImpl @Inject constructor(
             "Education",
             "Detective",
             "Adventure"
-        )
+        ).sorted()
     }
 
 }

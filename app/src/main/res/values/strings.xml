@@ -19,4 +19,7 @@
     <string name="book_preview">Book preview</string>
     <string name="books">Books</string>
     <string name="magazines">Magazines</string>
+    <string name="compilation">Compilation</string>
+    <string name="search">Search</string>
+    <string name="library">Library</string>
 </resources>
